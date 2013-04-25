@@ -4,18 +4,13 @@ ruby '1.9.3', :engine => 'jruby', :engine_version => '1.7.3'
 
 gem 'rails', '3.2.13'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 gem 'activerecord-jdbcsqlite3-adapter'
 
 gem 'jruby-openssl'
-
 gem 'puma'
 gem 'activerecord-jdbcpostgresql-adapter'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
-
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -30,6 +25,12 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
+group :test, :development do 
+  gem 'rspec-rails'
+  gem 'cucumber-rails'
+  gem 'capybara'
+end 
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
