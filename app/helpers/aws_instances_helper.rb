@@ -1,0 +1,2 @@
+module AwsInstancesHelper
+end
