@@ -11,6 +11,8 @@ gem 'puma'
 gem 'activerecord-jdbcpostgresql-adapter'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
+gem 'httparty'
+gem 'dalli'
 
 # Gems used only for assets and not required
 # in production environments by default.

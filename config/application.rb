@@ -61,5 +61,7 @@ module AwsInfo
 
     # per jruby instructions: https://github.com/jruby/heroku-buildpack-jruby
     config.assets.initialize_on_precompile = false
+
+    config.cache_store = :dalli_store
   end
 end
