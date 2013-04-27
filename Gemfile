@@ -10,10 +10,11 @@ gem 'jruby-openssl'
 gem 'puma'
 gem 'activerecord-jdbcpostgresql-adapter'
 gem 'less-rails'
-gem 'twitter-bootstrap-rails'
 gem 'httparty'
 gem 'dalli'
-gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+gem 'awesome_print'
+gem 'annotate'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -28,6 +29,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 group :test, :development do 
   gem 'rspec-rails'
