@@ -2,14 +2,72 @@
 
 <br />
 
-<table id="aws_info">
+<table id="aws_info" class="display">
   <thead>
     <tr>
-      <th></th>
+
+      <% @columns.each do |column| %>
+        <th class="<%= column.second %>"><%= column.first %></th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
+    <% @types.each do |ec2_type| %>
+      <tr>
+        <% @columns.each do |column| %>
+          <td><%= ec2_type.send(column.second) %></td>
+        <% end %>
+      </tr>
+    <% end %>
   </tbody>
-
 </table>
 
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#aws_info').dataTable({
+    "bJQueryUI": true,
+    "aoColumnDefs": [ 
+      { // memory stored as bytes, display as gigabytes
+      aTargets : [ "memory" ],
+      "mDataProp": function(data, type, val){
+        if (type === 'set') {
+          // store the bytes
+          data.memory_bytes = val;
+          // store the value as gigabytes
+          data.memory_gigabytes = (val / 1073741824).toPrecision(2);
+        }
+        else if (type === 'display') {
+          return data.memory_gigabytes;
+        }
+        else if (type === 'filter') {
+          // filtering happens only on gigabytes
+          return data.memory_gigabytes;
+        }
+        return data.memory_bytes;
+      }
+    },
+
+      { // storage stored as bytes, display as gigabytes
+      aTargets : [ "total_ephemeral_storage" ],
+      "mDataProp": function(data, type, val){
+        if (type === 'set') {
+          // store the bytes
+          data.storage_bytes = val;
+          // store the value as gigabytes
+          data.storage_gigabytes = (val / 1073741824);
+        }
+        else if (type === 'display') {
+          return data.storage_gigabytes;
+        }
+        else if (type === 'filter') {
+          // filtering happens only on gigabytes
+          return data.storage_gigabytes;
+        }
+        return data.storage_bytes;
+      }
+    }
+    ]
+  }
+                          )
+});
+</script>
