@@ -21,6 +21,12 @@
   </tbody>
 </table>
 
+<br />
+<% @columns.each do |column| %>
+  <a hfref="#" class="columnVisToggleButton" data-column="<%= column.second %>"><%= column.first %></a><br />
+<% end %>
+
+
 <script type="text/javascript">
 $(document).ready(function() {
   $('#aws_info').dataTable({
@@ -78,7 +84,18 @@ $(document).ready(function() {
     }
     ]
   }
+  )
+  $('.columnVisToggleButton').click(function() {
+      var col_names = $(this).data('column');
+      var awsTable = $('#aws_info').dataTable();
+      var column = $.grep(awsTable.fnSettings().aoColumns, function(aoColumn, i) { return aoColumn.mData === col_names; })[0];
+      // not 100% sure on this next line. Can also try column.nTh.cellIndex
+      var col_id = column.aDataSort[0];
+      var col_vis = column.bVisible;
 
-    )
+      awsTable.fnSetColumnVis( col_id , col_vis ? false : true );
+    }
+   );
+
 });
 </script>

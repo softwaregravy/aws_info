@@ -4,8 +4,7 @@ class AwsInstancesController < ApplicationController
   def index
     @pricing = Ec2Data.pricing
     @types = Ec2Data.type_specifications(@region)
-    @columns = 
-      [
+    @core_columns = [
         ["Name", "name"], 
         ["API name", "api_name"], 
         ["Cores", "cores"], 
@@ -18,6 +17,8 @@ class AwsInstancesController < ApplicationController
         ["Max IPs", "max_ips"], 
         ["Memory (GiB)", "memory"], 
         ["Ephemeral Storage (GiB)", "total_ephemeral_storage"],
+    ]
+    @linux_columns = [
         ["Linux Cost Per Hour ($)", "linux_cost_per_hour"],
         ["Linux Cost Per Memory Gi B ($)", "linux_cost_per_memory_GiB"], 
         ["Linux Cost Per Cores ($)", "linux_cost_per_cores"], 
@@ -26,6 +27,8 @@ class AwsInstancesController < ApplicationController
         ["Linux Cost Per Compute Units ($)", "linux_cost_per_compute_units"], 
         ["Linux Cost Per Ebs Optimization ($)", "linux_cost_per_ebs_optimization"], 
         ["Linux Cost Per Max Ips ($)", "linux_cost_per_max_ips"],
+    ]
+    @windows_columns = [
         ["MSWin Cost Per Hour ($)", "mswin_cost_per_hour"],
         ["MSWin Cost Per Storage Gi B ($)", "mswin_cost_per_storage_GiB"], 
         ["MSWin Cost Per Ebs Optimization ($)", "mswin_cost_per_ebs_optimization"], 
@@ -35,6 +38,7 @@ class AwsInstancesController < ApplicationController
         ["MSWin Cost Per Memory Gi B ($)", "mswin_cost_per_memory_GiB"], 
         ["MSWin Cost Per Max Ips ($)", "mswin_cost_per_max_ips"], 
     ]
+    @columns = @core_columns.concat(@linux_columns).concat(@windows_columns)
   end
 
   private 
