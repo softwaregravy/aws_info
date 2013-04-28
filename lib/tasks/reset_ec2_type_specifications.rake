@@ -3,6 +3,8 @@ namespace :db do
   task :reset_ec2_type_specifications => :environment do 
     # http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html
 
+    Ec2TypeSpecification.delete_all
+
     Ec2TypeSpecification.find_or_create_by_api_name("t1.micro",
                                                     name: "Micro",
                                                     api_type: "uODI",

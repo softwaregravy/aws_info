@@ -27,4 +27,39 @@ class Ec2TypeSpecification < ActiveRecord::Base
     :ephemeral_drives, :io_performance, :max_ips, :memory, :name, :support_32_bit, :support_64_bit, 
     :total_ephemeral_storage
 
-end
+  def architecture 
+    return "32-bit" if support_32_bit && !support_64_bit
+    return "32-bit/64-bit" if support_32_bit && support_64_bit
+    return "64-bit" if !support_32_bit && support_64_bit
+  end 
+
+  def memory_GiB
+    memory / 1.gigabyte 
+  end 
+
+  def storage_GiB
+    storage / 1.gigabyte 
+  end 
+
+  def prices(region = 'us-east')
+    @prices ||= Ec2Data.pricing[region][api_type][api_size]
+  end 
+
+  # Ec2TypeSpecification.last.public_methods(false).select{|m| m.to_s.match(/^linux|^mswin/)}
+  # [:mswin_cost_per_storage_GiB, :linux_cost_per_memory_GiB, :linux_cost_per_cores, :linux_cost_per_storage_GiB, 
+  # :mswin_cost_per_ebs_optimization, :mswin_cost_per_ephemeral_drives, :mswin_cost_per_cores, :mswin_cost_per_compute_units, 
+  # :mswin_cost_per_memory_GiB, :mswin_cost_per_hour, :linux_cost_per_ephemeral_drives, :mswin_cost_per_max_ips, 
+  # :linux_cost_per_compute_units, :linux_cost_per_ebs_optimization, :linux_cost_per_hour, :linux_cost_per_max_ips]
+  ["linux", "mswin"].each do |os|
+    define_method "#{os}_cost_per_hour" do |region = "us-east"|
+      prices(region)[os]
+    end 
+
+    ["memory_GiB", "compute_units", "cores", "ephemeral_drives", "ebs_optimization", "storage_GiB", "max_ips"].each do |attr|
+      define_method "#{os}_cost_per_#{attr}" do |region = "us-east"|
+        send("#{os}_cost_per_hour") / send(attr)
+      end 
+    end 
+
+  end 
+end 
