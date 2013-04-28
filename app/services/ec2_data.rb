@@ -30,11 +30,11 @@ class Ec2Data
       end 
     end
 
-    def type_specifications 
-      #Rails.cache.fetch('type-specificaions', :expires_in => 24.hours) do 
+    def type_specifications(region)
+      Rails.cache.fetch("type-specificaions-#{region}", :expires_in => 24.hours) do 
         Rails.logger.info("Refreshing ec2 type specificaions")
-        Ec2TypeSpecification.all
-      #end 
+        Ec2TypeSpecification.all.map{|type_spec| type_spec.prices(region); type_spec }
+      end 
     end 
 
     def type_translation 

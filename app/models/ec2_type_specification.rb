@@ -38,7 +38,7 @@ class Ec2TypeSpecification < ActiveRecord::Base
   end 
 
   def storage_GiB
-    storage / 1.gigabyte 
+    total_ephemeral_storage / 1.gigabyte 
   end 
 
   def prices(region = 'us-east')
@@ -51,15 +51,14 @@ class Ec2TypeSpecification < ActiveRecord::Base
   # :mswin_cost_per_memory_GiB, :mswin_cost_per_hour, :linux_cost_per_ephemeral_drives, :mswin_cost_per_max_ips, 
   # :linux_cost_per_compute_units, :linux_cost_per_ebs_optimization, :linux_cost_per_hour, :linux_cost_per_max_ips]
   ["linux", "mswin"].each do |os|
-    define_method "#{os}_cost_per_hour" do |region = "us-east"|
-      prices(region)[os]
+    define_method "#{os}_cost_per_hour" do 
+      prices[os]
     end 
 
     ["memory_GiB", "compute_units", "cores", "ephemeral_drives", "ebs_optimization", "storage_GiB", "max_ips"].each do |attr|
-      define_method "#{os}_cost_per_#{attr}" do |region = "us-east"|
+      define_method "#{os}_cost_per_#{attr}" do 
         send("#{os}_cost_per_hour") / send(attr)
       end 
     end 
-
   end 
 end 

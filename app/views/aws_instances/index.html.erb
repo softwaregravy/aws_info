@@ -2,10 +2,9 @@
 
 <br />
 
-<table id="aws_info" class="display">
+<table id="aws_info" class="display" data-source="<%= aws_instances_index_url(format: "json") %>">
   <thead>
     <tr>
-
       <% @columns.each do |column| %>
         <th class="<%= column.second %>"><%= column.first %></th>
       <% end %>
@@ -26,6 +25,11 @@
 $(document).ready(function() {
   $('#aws_info').dataTable({
     "bJQueryUI": true,
+    "aoColumns": [
+      <% @columns.each do |column| %>
+        {"mData": "<%= column.second %>"},
+      <% end %>
+    ],
     "aoColumnDefs": [ 
       { // memory stored as bytes, display as gigabytes
       aTargets : [ "memory" ],
@@ -46,8 +50,7 @@ $(document).ready(function() {
         return data.memory_bytes;
       }
     },
-
-      { // storage stored as bytes, display as gigabytes
+    { // storage stored as bytes, display as gigabytes
       aTargets : [ "total_ephemeral_storage" ],
       "mDataProp": function(data, type, val){
         if (type === 'set') {
@@ -65,9 +68,17 @@ $(document).ready(function() {
         }
         return data.storage_bytes;
       }
+    },
+    { // hide windows and spend breakdown columns
+      aTargets : ["mswin_cost_per_hour", "mswin_cost_per_storage_GiB", "mswin_cost_per_ebs_optimization", "mswin_cost_per_ephemeral_drives",
+           "mswin_cost_per_cores", "mswin_cost_per_compute_units", "mswin_cost_per_memory_GiB", "mswin_cost_per_max_ips",
+           "linux_cost_per_memory_GiB", "linux_cost_per_cores", "linux_cost_per_storage_GiB", "linux_cost_per_ephemeral_drives",
+           "linux_cost_per_compute_units", "linux_cost_per_ebs_optimization", "linux_cost_per_max_ips"],
+      "bVisible": false
     }
     ]
   }
-                          )
+
+    )
 });
 </script>
