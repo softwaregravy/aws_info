@@ -1,5 +1,9 @@
-<h1>AwsInstances#index</h1>
-
+<h1>AWS EC2 Instance Costs: <%= @region.titleize %></h1>
+<br />
+<%= form_tag do %>
+  <% regions_array = @regions.map{|r| [r.titleize, aws_instances_index_url(region: r)]} %>
+  <%= select_tag(:region, options_for_select(regions_array, aws_instances_index_url(region: @region))) %>
+<% end %>
 <br />
 
 <table id="aws_info" class="display" data-source="<%= aws_instances_index_url(format: "json") %>">
@@ -25,6 +29,12 @@
 <% @columns.each do |column| %>
   <a hfref="#" class="columnVisToggleButton" data-column="<%= column.second %>"><%= column.first %></a><br />
 <% end %>
+
+<br />
+<a href="#" class="groupColVisToggleButton" data-all-visible="false" data-columns='[<%= @linux_columns.map(&:second).map{|s| "\"#{s}\"" }.join(",") %>]'>All Linux</a>
+
+<br />
+<a href="#" class="groupColVisToggleButton" data-all-visible="false" data-columns='[<%= @windows_columns.map(&:second).map{|s| "\"#{s}\"" }.join(",") %>]'>All Windows</a>
 
 
 <script type="text/javascript">
@@ -76,26 +86,49 @@ $(document).ready(function() {
       }
     },
     { // hide windows and spend breakdown columns
-      aTargets : ["mswin_cost_per_hour", "mswin_cost_per_storage_GiB", "mswin_cost_per_ebs_optimization", "mswin_cost_per_ephemeral_drives",
-           "mswin_cost_per_cores", "mswin_cost_per_compute_units", "mswin_cost_per_memory_GiB", "mswin_cost_per_max_ips",
-           "linux_cost_per_memory_GiB", "linux_cost_per_cores", "linux_cost_per_storage_GiB", "linux_cost_per_ephemeral_drives",
-           "linux_cost_per_compute_units", "linux_cost_per_ebs_optimization", "linux_cost_per_max_ips"],
+      aTargets : [
+          <% @windows_columns.concat(@linux_columns).each do |column| %>
+            // except for linux per hour as our default cost
+            <% next if column.second == "linux_cost_per_hour" %>
+            "<%= column.second %>",
+          <% end %>
+       ],
       "bVisible": false
     }
     ]
   }
   )
-  $('.columnVisToggleButton').click(function() {
-      var col_names = $(this).data('column');
+    var toggleColumnVisibility = function(col_name, options) {
       var awsTable = $('#aws_info').dataTable();
-      var column = $.grep(awsTable.fnSettings().aoColumns, function(aoColumn, i) { return aoColumn.mData === col_names; })[0];
+      var column = $.grep(awsTable.fnSettings().aoColumns, function(aoColumn, i) { return aoColumn.mData === col_name; })[0];
       // not 100% sure on this next line. Can also try column.nTh.cellIndex
       var col_id = column.aDataSort[0];
       var col_vis = column.bVisible;
+      var set_vis_to = col_vis ? false : true;
 
-      awsTable.fnSetColumnVis( col_id , col_vis ? false : true );
+      if (options != undefined && options["set_vis_to"] != undefined) {
+        set_vis_to = options.set_vis_to
+      }
+
+      awsTable.fnSetColumnVis(col_id, set_vis_to);
+    };
+  $('.columnVisToggleButton').click(function() {
+      var col_name = $(this).data('column');
+      toggleColumnVisibility(col_name);
     }
    );
+  $('.groupColVisToggleButton').click(function() {
+      var col_names = $(this).data('columns');
+      var curr_vis = $(this).data('all-visible');
+      var set_vis_to = curr_vis ? false : true;
+      $(this).data('all-visible', set_vis_to);
+      $.each(col_names, function(i, col_name) { toggleColumnVisibility(col_name, {set_vis_to: set_vis_to}); });
+    }
+  );
+  $('#region').change(function() {
+      window.location = $(this).val();
+    }
+  );
 
 });
 </script>

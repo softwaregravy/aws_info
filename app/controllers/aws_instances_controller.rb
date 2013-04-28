@@ -11,10 +11,9 @@ class AwsInstancesController < ApplicationController
         ["Core Type", "core_type"], 
         ["Architecture", "architecture"],
         ["Compute Units", "compute_units"], 
-        ["EBS Optimization", "ebs_optimization"], 
+        ["EBS Optimization (Mbps)", "ebs_optimization"], 
         ["Ephemeral Drives", "ephemeral_drives"], 
         ["IO Performance", "io_performance"], 
-        ["Max IPs", "max_ips"], 
         ["Memory (GiB)", "memory"], 
         ["Ephemeral Storage (GiB)", "total_ephemeral_storage"],
     ]
@@ -26,7 +25,6 @@ class AwsInstancesController < ApplicationController
         ["Linux Cost Per Ephemeral Drives ($)", "linux_cost_per_ephemeral_drives"], 
         ["Linux Cost Per Compute Units ($)", "linux_cost_per_compute_units"], 
         ["Linux Cost Per Ebs Optimization ($)", "linux_cost_per_ebs_optimization"], 
-        ["Linux Cost Per Max Ips ($)", "linux_cost_per_max_ips"],
     ]
     @windows_columns = [
         ["MSWin Cost Per Hour ($)", "mswin_cost_per_hour"],
@@ -36,7 +34,6 @@ class AwsInstancesController < ApplicationController
         ["MSWin Cost Per Cores ($)", "mswin_cost_per_cores"], 
         ["MSWin Cost Per Compute Units ($)", "mswin_cost_per_compute_units"], 
         ["MSWin Cost Per Memory Gi B ($)", "mswin_cost_per_memory_GiB"], 
-        ["MSWin Cost Per Max Ips ($)", "mswin_cost_per_max_ips"], 
     ]
     @columns = @core_columns.concat(@linux_columns).concat(@windows_columns)
   end
@@ -44,5 +41,6 @@ class AwsInstancesController < ApplicationController
   private 
   def set_region
     @region = params[:region] || 'us-east'
+    @regions = Ec2Data.regions
   end 
 end

@@ -15,9 +15,14 @@ class CreateEc2TypeSpecifications < ActiveRecord::Migration
       t.integer :total_ephemeral_storage
       t.integer :ebs_optimization
       t.string :io_performance
-      t.integer :max_ips
+      t.boolean :spot_available
+      t.string :notes
+      t.integer :elastic_network_interfaces
+      t.integer :private_ip_per_eni
 
       t.timestamps
     end
+    add_index :ec2_type_specifications, :api_name, :unique => true
+ 
   end
 end

@@ -28,9 +28,14 @@ ActiveRecord::Schema.define(:version => 20130427205639) do
     t.integer  "total_ephemeral_storage"
     t.integer  "ebs_optimization"
     t.string   "io_performance"
-    t.integer  "max_ips"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
+    t.boolean  "spot_available"
+    t.string   "notes"
+    t.integer  "elastic_network_interfaces"
+    t.integer  "private_ip_per_eni"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
+
+  add_index "ec2_type_specifications", ["api_name"], :name => "index_ec2_type_specifications_on_api_name", :unique => true
 
 end

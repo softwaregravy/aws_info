@@ -56,16 +56,5 @@ class Ec2Data
       }
     end 
 
-    def region_translation 
-      {
-        'us-east-1' => 'us-east',
-        'us-west-2' => 'us-west-2',
-        'us-west-1' => 'us-west',
-        'eu-west-1' => 'eu-ireland',
-        'ap-southeast-1' => 'apac-sin',
-        'ap-northeast-1' => 'apac-tokyo',
-        'sa-east-1' => 'sa-east-1'
-      }
-    end 
   end 
 end 
