@@ -4,8 +4,6 @@ ruby '1.9.3', :engine => 'jruby', :engine_version => '1.7.3'
 
 gem 'rails', '3.2.13'
 
-gem 'activerecord-jdbcsqlite3-adapter'
-
 gem 'jruby-openssl'
 gem 'puma'
 gem 'activerecord-jdbcpostgresql-adapter'
