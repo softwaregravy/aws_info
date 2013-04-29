@@ -11,5 +11,9 @@ We were solid up until right around 100 users. Last "good" datapoint (no timeout
 - peak: 80 hits/s @ 120s (101 users) 236ms response time
 - by 172 users our throughput drops to 0 (all requests timeout)
 - newrelic shows the vast majority of latency as request queuing
+- memory was pretty constant at 368-373MB 
 
-Lets try page caching
+Ideas for improving performance:
+- asset/partial-page caching
+- whole action caching
+- more puma processes (looks like we still have some memory to spare)
