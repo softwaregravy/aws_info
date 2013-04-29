@@ -22,7 +22,7 @@ class Ec2Data
     end 
 
     def fetch_pricing
-      Rails.cache.fetch('pricing-on-demand-instances', :expires_in => 1.hour) do 
+      Rails.cache.fetch('pricing-on-demand-instances', :expires_in => 1.day) do 
         Rails.logger.info("Refreshing price cache")
         response = HTTParty.get('http://aws.amazon.com/ec2/pricing/pricing-on-demand-instances.json')
         Rails.logger.info("Refreshed: #{response.code}: #{response.message}")
@@ -31,30 +31,12 @@ class Ec2Data
     end
 
     def type_specifications(region)
-#      Rails.cache.fetch("type-specificaions-#{region}", :expires_in => 24.hours) do 
+      Rails.cache.fetch("type-specificaions-#{region}") do 
         Rails.logger.info("Refreshing ec2 type specificaions")
         Ec2TypeSpecification.all.map{|type_spec| type_spec.prices(region); type_spec }
-#      end 
+      end 
     end 
 
-    def type_translation 
-      {
-        "m1.small" => ['stdODI', 'sm'],
-        'm1.medium' => ['stdODI', 'med'],
-        'm1.large' => ['stdODI', 'lg'],
-        'm1.xlarge' => ['stdODI', 'xl'],
-        't1.micro' => ['uODI', 'u'],
-        'm2.xlarge' => ['hiMemODI', 'xl'],
-        'm2.2xlarge' => ['hiMemODI', 'xxl'],
-        'm2.4xlarge' => ['hiMemODI', 'xxxxl'],
-        'c1.medium' => ['hiCPUODI', 'med'],
-        'c1.xlarge' => ['hiCPUODI', 'xl'],
-        'cc1.4xlarge' => ['clusterComputeI', 'xxxxl'],
-        'cc2.8xlarge' => ['clusterComputeI', 'xxxxxxxxl'],
-        'cg1.4xlarge' => ['clusterGPUI', 'xxxxl'],
-        'hi1.4xlarge' => ['hiIoODI', 'xxxx1']
-      }
-    end 
 
   end 
 end 
