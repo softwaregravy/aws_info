@@ -13,6 +13,7 @@ gem 'dalli'
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'awesome_print'
 gem 'annotate'
+gem 'newrelic_rpm'
 
 # Gems used only for assets and not required
 # in production environments by default.
