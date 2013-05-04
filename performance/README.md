@@ -33,4 +33,17 @@ We were solid up until 100 users again. Last "good" datapoint was at 120s
 
 This is very exciting though, because unlike the previous test, the system suffered a bit of degredation, but then adapted. Maybe the JVM did optimization for us? Maybe caching got better? Point is, we had some great datapoints further on.
 
+v1.4
+====
+
+This is the same as v1.3, but v1.3 basically maxed the load test so we needed a new baseline before going to v1.5
+
+New blitz command string: -T 5000 -p 100-500:300 http://aws-data.herokuapp.com/aws_instances/index?region=us-east 
+
+Given that this requires the $800/month level of service, I really need to remember to turn this off when I finish today.
+
+- This test pushed the app over
+- we had a peak of 227 hits/s
+- we had timeouts throughout the test (these results were arguably worse than those of v1.3). Not starting from 1 seems to be "bad"
+- The wheels did not come off until we were well over 400 users
 
