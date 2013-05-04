@@ -1,6 +1,8 @@
 class AwsInstancesController < ApplicationController
   before_filter :set_region
 
+  caches_action :index, :expires_in => 1.hour
+
   def index
     @pricing = Ec2Data.pricing
     @types = Ec2Data.type_specifications(@region)

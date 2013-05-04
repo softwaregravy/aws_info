@@ -22,7 +22,7 @@ class Ec2Data
     end 
 
     def fetch_pricing
-      Rails.cache.fetch('pricing-on-demand-instances', :expires_in => 1.day) do 
+      Rails.cache.fetch('pricing-on-demand-instances', :expires_in => 1.day, :race_condition_ttl => 1.minute) do 
         Rails.logger.info("Refreshing price cache")
         response = HTTParty.get('http://aws.amazon.com/ec2/pricing/pricing-on-demand-instances.json')
         Rails.logger.info("Refreshed: #{response.code}: #{response.message}")
@@ -31,7 +31,7 @@ class Ec2Data
     end
 
     def type_specifications(region)
-      Rails.cache.fetch("type-specificaions-#{region}") do 
+      Rails.cache.fetch("type-specificaions-#{region}", :expires_in => 1.day, :race_condition_ttl => 1.minute) do 
         Rails.logger.info("Refreshing ec2 type specificaions")
         Ec2TypeSpecification.all.map{|type_spec| type_spec.prices(region); type_spec }
       end 
