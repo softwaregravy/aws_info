@@ -61,4 +61,22 @@ Regardless, having variable (or default) threads seem to have added a big penalt
 Damn!
 
 
+v1.4 -- round 2
+====
 
+re-ran the test on v1.4 again with the new commandstring. I think I was hitting something odd in blitz, results sedond time around were much better.
+
+- app server did not fail
+- peak 458 hits/s
+- did not suffer timouts throughout 
+
+v1.5 -- rount 2
+====
+
+Going for 1000!
+
+New commandstring: -T 5000 -p 400-1000:60 http://aws-data.herokuapp.com/aws_instances/index?region=us-east
+
+- hot damn! is this thing working? 947 hits/s?
+
+... unfortunately, no, it's not working. It's showing the error page. Damn it!
