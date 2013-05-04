@@ -70,7 +70,7 @@ re-ran the test on v1.4 again with the new commandstring. I think I was hitting 
 - peak 458 hits/s
 - did not suffer timouts throughout 
 
-v1.5 -- rount 2
+v1.5 -- round 2
 ====
 
 Going for 1000!
@@ -80,3 +80,11 @@ New commandstring: -T 5000 -p 400-1000:60 http://aws-data.herokuapp.com/aws_inst
 - hot damn! is this thing working? 947 hits/s?
 
 ... unfortunately, no, it's not working. It's showing the error page. Damn it!
+
+v1.5 -- round 3
+====
+
+Okay. Using the same commandstirng: -T 5000 -p 400-1000:60 http://aws-data.herokuapp.com/aws_instances/index?region=us-east
+
+- peak 283 requests/s
+- timeouts happening throughout
