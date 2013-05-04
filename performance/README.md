@@ -47,3 +47,18 @@ Given that this requires the $800/month level of service, I really need to remem
 - we had timeouts throughout the test (these results were arguably worse than those of v1.3). Not starting from 1 seems to be "bad"
 - The wheels did not come off until we were well over 400 users
 
+v1.5
+====
+
+In version 1.5 we had to change our command string. Blitz appears to validate commands inconsistently. The docs always claimed we couldn't run tests longer than 60 seconds, but until now I've been running 5 min tests with no problem. No longer.
+
+New commandstring: -T 5000 -p 100-500:60 http://aws-data.herokuapp.com/aws_instances/index?region=us-east
+
+Regardless, having variable (or default) threads seem to have added a big penalty to performance. In this test, we blew threw the test.
+
+- Peak of 466 hits/s
+
+Damn!
+
+
+
