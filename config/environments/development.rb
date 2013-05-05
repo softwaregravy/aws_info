@@ -36,4 +36,5 @@ AwsInfo::Application.configure do
   config.assets.debug = true
 
   config.assets.prefix = "/assets_dev"
+
 end
