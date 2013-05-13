@@ -6,7 +6,7 @@
 <% end %>
 <br />
 
-<table id="aws_info" class="display" data-source="<%= aws_instances_index_url(format: "json") %>">
+<table id="aws_info" class="display" data-source="<%= aws_instances_index_url(region: @region, format: "json") %>">
   <thead>
     <tr>
       <% @columns.each_with_index do |column, i| %>

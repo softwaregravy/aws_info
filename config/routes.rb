@@ -1,5 +1,5 @@
 AwsInfo::Application.routes.draw do
-  get "aws_instances/index"
+  match "aws_instances/index/:region" => 'aws_instances#index', :via => :get, :as => 'aws_instances_index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
