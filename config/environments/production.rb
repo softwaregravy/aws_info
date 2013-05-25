@@ -69,7 +69,7 @@ AwsInfo::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # To get faster asset compile times as per https://github.com/jruby/heroku-buildpack-jruby
-  config.assets.js_compressor = :closure
+  #config.assets.js_compressor = :closure
 
   # per https://github.com/jruby/heroku-buildpack-jruby
   STDOUT.sync = true
