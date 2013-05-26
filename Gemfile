@@ -52,8 +52,9 @@ end
 # gem 'debugger'
 
 # the javascript engine for execjs gem
-platforms :jruby do
-  group :assets do
-    gem 'therubyrhino'
-  end
-end
+# platforms :jruby do
+#  group :assets do
+#    gem 'therubyrhino'
+#  end
+#end
+
