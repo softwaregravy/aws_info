@@ -107,5 +107,8 @@ $(document).ready(function() {
       window.location = $(this).val();
     }
   );
+  $('#aws_info tr').click(function() {
+      $(this).toggleClass('row_selected');
+  });
 
 });

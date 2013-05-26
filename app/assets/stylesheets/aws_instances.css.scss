@@ -1,3 +1,44 @@
 // Place all the styles related to the aws_instances controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#aws_info tbody tr.even:hover, #aws_info tbody tr.even td.highlighted {
+  background-color: #ECFFB3;
+}
+
+#aws_info tbody tr.odd:hover, #aws_info tbody tr.odd td.highlighted {
+  background-color: #E6FF99;
+}
+
+#aws_info tr.even:hover {
+  background-color: #ECFFB3;
+}
+
+#aws_info tr.even:hover td.sorting_1 {
+  background-color: #DDFF75;
+}
+
+#aws_info tr.even:hover td.sorting_2 {
+  background-color: #E7FF9E;
+}
+
+#aws_info tr.even:hover td.sorting_3 {
+  background-color: #E2FF89;
+}
+
+#aws_info tr.odd:hover {
+  background-color: #E6FF99;
+}
+
+#aws_info tr.odd:hover td.sorting_1 {
+  background-color: #D6FF5C;
+}
+
+#aws_info tr.odd:hover td.sorting_2 {
+  background-color: #E0FF84;
+}
+
+#aws_info tr.odd:hover td.sorting_3 {
+  background-color: #DBFF70;
+}
+
